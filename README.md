@@ -55,6 +55,27 @@ TODO: kawashima あとで書きなおす
 
 ###### section3-2
 ### メソッド名
+メソッド名は、全て小文字とし単語の区切りに`_`を用いる。
+
+真偽値を返すメソッド名は、動詞または形容詞に`?`を付け、形容詞に`is_`は付けない。
+
+破壊的なメソッドと非破壊的なメソッドの両方を提供する場合、破壊的なメソッドには`!`を付ける。
+
+**正解**
+```ruby
+add_something
+visible?
+split
+split!
+```
+
+**誤り**
+```ruby
+addSomething
+Add_Something
+is_visible
+is_visible?
+```
 
 ###### section3-3
 ### 定数名
