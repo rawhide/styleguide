@@ -70,11 +70,11 @@ TODO: kawashima あとで書きなおす
 インデントは半角スペース２コ。ハードタブの使用は禁止する。
 
 ```ruby
-  if x > 0
-    if y > 0
-      puts "x > 0 && y > 0"
-    end
-  end
+__if x > 0
+____if y > 0
+______puts "x > 0 && y > 0"
+____end
+__end
 ```
 
 ###### section4-2
