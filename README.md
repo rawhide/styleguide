@@ -118,6 +118,24 @@ __end
 
 ###### section4-8
 ### ファイル
+ファイルの入出力は特別な事情がない限りブロックを使うこと。
+
+**正解**
+```ruby
+open("sample.txt", "r") do |f|
+  puts f.gets
+end
+```
+
+**誤り**
+```ruby
+begin
+  f = open("sample.txt", "r")
+  puts f.gets
+ensure
+  f.close
+end
+```
 
 ###### section4-9
 ### RubyGems
