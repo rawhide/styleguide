@@ -420,6 +420,7 @@ test 環境、またその他の環境に関しては project_name_environment �
 
 ###### section5-2
 ### 日付型カラム名
+datetime型、timestamp型は
 ****_at で統一。
 
 年月日のみ（date型）の場合は***_onを使用する。
