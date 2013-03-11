@@ -362,7 +362,7 @@ config.gem 'rspec', ;lib => false
 
 また、gem は rake gems:unpack を使用し、RAILS_ROOT/vender/gems に格納すること。
 
-###### section4-9
+###### section4-10
 ### ERB::Util.html_escape
 Web アプリにおいて、出力文字列のエスケープは XSS に対する最も基本的な対処法である。
 
@@ -401,7 +401,7 @@ test 環境、またその他の環境に関しては project_name_environment �
 
 テストツールには RSpec を標準とする。
 
-テストは自動化し、バグの早期発見に関する。
+テストは自動化し、バグの早期発見に努める。
 
 ###### section7
 ## 原則
