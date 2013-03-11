@@ -405,7 +405,7 @@ end
 また、method_missingで追加したメソッドについては、下記の様にどのレベルまでrespond_to?に対応するかは都度チームで決定し拡張しましょう。
 ```ruby
 def respond_to?(name)
-  @attr.key?(method) ? true : super
+  @attr.key?(method) || super
 end
 ```
 
