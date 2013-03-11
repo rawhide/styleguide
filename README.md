@@ -39,97 +39,118 @@ TODO: kawashima あとで書きなおす
 ###### section1
 ## 基本方針
 - レディーに悲しい思いはさせない。
+- 食べ物や包丁を武器につかうやつは、コックとして失格だ！
 
-このスタイルガイドは、株式会社 RAWHIDE.でのプロジェクトにおいての標準ルールであり、コーティングおよび設計する際のルール・推奨などを提供するものである。
+### 目的
+- 「読みやすくメンテナンスしやすいコードを書く」ことの価値観をチームで共有できる。
+- コーディング規約という共通基盤を通して、プログラマーのスキルアップをはかることができる。
 
-この規約の根底にあるのは「読みやすくメンテナンスしやすいコードを書く」ことである。
-
-よって、場合によってはこの規約から外れることも時には重要である。その際には自分の考えを整理し、チームメンバーに相談すること。
+### 使い方
+- 異臭をはなつ部分は、issueで議論しましょう。決まったものからこちらに移していきましょう。
+- 場合によってはこの規約から外れることも時には重要であり、その際はなにかしらの説明を用意するようにしましょう。
 
 ###### section2
 ## ファイル
-以下は Rails プロジェクトにおいてのルールである。基本的には Rails のルールに従うこと。
+- 以下は Rails プロジェクトにおいてのルールである。基本的には Rails のルールにしたがうようにしましょう。
 
 ###### section2-1
 ### レイアウトファイル
-RAILS_ROOT/app/views/layouts はレイアウトファイルのみを入れる。
-
-全体を通して使用するレイアウトファイルは application.html.erb という名前で作成する。
+- RAILS_ROOT/app/views/layouts はレイアウトファイルのみを入れましょう。//TODO:あたりまえすぎないか？
+- 全体を通して使用するレイアウトファイルは application.html.erb という名前で作成しましょう。//TODO:あたりまえすぎないか？
 
 ###### section2-2
 ### 部分テンプレート
-コントローラにまたがる部分テンプレートは RAILS_ROOT/app/views/share に配置。
-
-あるコントローラのみで使用する部分テンプレートは RAILS_ROOT/app/controller_name に配置する。
+- コントローラにまたがる部分テンプレートは RAILS_ROOT/app/views/share に配置するようにしましょう。
 
 ###### section3
 ## 命名規約
-名前は単なるラベルではなく、読み手に意味を伝えるべきものである。よって名前は意味のあるものでなくてはならない。
+- 名前は単なるラベルではなく、読み手に意味を伝えるべきものである。よって名前は意味のあるものであるべきです。命名する対象の変数のスコープの広さにに比例してわかりやすさ重視にしましょう。
+```ruby
+  #定数
+  Teinenpi #○
+  TNP      #×
 
-また、原則として基本的に単語の省略は行わない。特にグローバル変数などのスコープが拾い物に大しては厳禁である。
+  #クラス/モジュール名
+  class Joshikousei; end; #○
+  class Jk; end;          #×
 
-名前が長い場合に、入力の手間が増えるという問題があるが、それはIDEやエディタで対応できることなのでここでは問題にしない。
+  #メソッド名
+  def joshikousei?; end; #○
+  def jk?                #×
+
+  #インスタンス変数
+  @joshikousei #○
+  @jk          #△
+
+  #ローカル変数
+  @girls.each do |g| #○
+    g.joshikousei?   #○
+  end
+```
+
+名前が長い場合に、入力の手間が増えるという問題があるが、それはIDEやエディタで対応できることなのでここでは問題にせずにいきましょう！
 
 ###### section3-1
 ### クラス・モジュール名
-クラス、モジュール名は、各単語の一文字めを大文字にし、'_'などの区切り文字は使用しない。
-
-HTTPなどの略語の場合は全て大文字んおままとする。
-
-例外クラスでは特別な事情がない限り末尾に「Error」とつける。
+- クラス、モジュール名は、各単語の一文字めを大文字にし、'_'などの区切り文字は使用しません。
+- TPPなどの略語の場合は全て大文字のままにしましょう（省略してるよーって意味が伝わるように）。
+- 例外クラスでは特別な事情がない限り末尾に「Error」をつけましょう。
+- よほどの意図がない限り、複数名を使用するはやめましょう。
 
 **正解**
 ```ruby
-ExampleClass
-HTTPClient
-PermissionError
+NurseCall
+TTPClient
+AKBMember
+OreOreError
 ```
 
 **誤り**
 ```ruby
-Example_Class
-EXAMPLE_CLASS
-HTTP_Client
+Nurse_Room
+TPP_CLIENT
+AKBMembers
+CsvReader
 ```
 
 ###### section3-2
 ### メソッド名
-メソッド名は、全て小文字とし単語の区切りに`_`を用いる。
-
-真偽値を返すメソッド名は、動詞または形容詞に`?`を付け、形容詞に`is_`は付けない。
-
-破壊的なメソッドと非破壊的なメソッドの両方を提供する場合、破壊的なメソッドには`!`を付ける。
+- メソッド名は、全て小文字とし単語の区切りに`_`をつかいましょう。
+- 真偽値を返すメソッド名は、動詞または形容詞に`?`を付けましょう。
+- 破壊的なメソッドと非破壊的なメソッドの両方を提供する場合、破壊的なメソッドには`!`をつけましょう。
+- それ以外で!を使用する場合は、メソッド作成者が利用者に対して、「あぶないぞー！！」っと意思表示したいときにつけましょう。
 
 **正解**
 ```ruby
-add_something
-visible?
-split
-split!
+add_boy
+pretty?
+noripi?
+dance
+dance!
 ```
 
 **誤り**
 ```ruby
-addSomething
-Add_Something
-is_visible
-is_visible?
+addBoy
+Add_Boy
+is_noripi
+was_noripi?
 ```
 
 ###### section3-3
 ### 定数名
-クラス、モジュール名以外の定数名はすべて大文字とし、単語の区切りに'_'を用いる。
+クラス、モジュール名以外の定数名はすべて大文字とし、単語の区切りに'_'を用いるようにしましょう。
 
 **正解**
 ```ruby
-EXAMPLE_CONSTANT
+HONKY_TONKY_CRAZY_I_LOVE_YOU
 ```
 
 ###### section3-4
 ### 変数名
-変数名は全て小文字とし、単語の区切りに'_'を用いる。
-
-また、スコープが狭いループ変数には、i,j,k という名前、スコープが狭い変数名は、クラス名を省略したものを使用してよい。
+- 変数名は全て小文字とし、単語の区切りに'_'を用いるようにしましょう。
+- また、スコープが狭いループ変数には、i,j,k という名前、スコープが狭い変数名は、クラス名を省略したものを使用してもオッケー！！！
+- 気持ちはとてもわかりますが、hogeとか、fooとかやめときましょう。
 
 - (例：eo = ExampleObjext.new
 
@@ -140,38 +161,34 @@ local_variable
 $global_variable
 ```
 
+### シンボル
+//TODO:issue
+
 ###### section4
-## ガイドライン
+### ガイドライン
 
 ###### section4-1
 ### インデント
-インデントは半角スペース２コ。ハードタブの使用は禁止する。
+インデントは半角スペース２コ。ハードタブの使用は禁止です。あとで本当にきっついです。できる限りエディタでセットしておきましょう。
 
 ```ruby
-__if x > 0
-____if y > 0
-______puts "x > 0 && y > 0"
+__if girl > 0
+____if girl.pefurme? > 0
+______puts "ferver!!!!!"
 ____end
 __end
 ```
 
 ###### section4-2
 ### コメント
-コメントは原則書かない。なぜならコードの読みにくさを補助するものではないためである。
-
-書き手はコメントがなくても意図が伝わるようなコードを書くべきである。
-
-よてコードは読めばわかることや、当たり前のことをわざわざコメントとして残す必要はない。
-
-コーディング標準や規約に反する場合、またプログラマー個人の意図がソースに介入している場所に限り、わかりやすいコメントを残す。
-
-まt,あコメントを残す場合には「なにを」ではなく「なぜ」を書くこと。
+- コメントは原則書かないように心がけましょう。それよりも書き手はコメントがなくても意図が伝わるようなコードを書くようにこころがけましょう。
+- コーディング標準や規約に反する場合や、またプログラマー個人の意図がソースに介入している場所に限り、わかりやすいコメントを残すようにしましょう。
+- プログラマーの腕のみせどころは、丁寧なコメントを多く書くことではなく、いかにわかりやすいコードを書くかです。よって、コメントを残す場合には「なにを」ではなく「なぜ」を書くようにしましょう。
 
 ###### section4-3
 ### メソッド定義
-メソッドの定義の仮引数リストには括弧を付ける。
-
-引数がない場合は、括弧を省略する。
+- メソッドの定義の仮引数リストには括弧を付けるようにしましょう。//TODO:yokohama issueで検討
+- 引数がない場合は、括弧を省略する。
 
 **正解**
 ```ruby
@@ -190,11 +207,13 @@ def foo()
   ・・・
 end
 ```
+
+### 可変パラメータ //TODO:issue
+
 ###### section4-4
 ### ブロック
-ブロックは基本的にdo・・・endを使用する。ただし１行の時は{}を使う。
-
-またメソッドチェーンの場合も{}を使用する。
+- ブロックは基本的にdo・・・endを使用しましょう。ただし１行の時は{}を使いましょう。
+- またメソッドチェーンの場合も{}を使用しましょう。
 
 **正解**
 ```ruby
@@ -202,7 +221,7 @@ foo(x,y) do
   ・・・
 end
 
-bar.each{|i| i.to_s}
+akb48.each{|a| a.dance!}
 
 bar.map{|i| i.to_s}.each{|i| puts i}
 ```
@@ -222,33 +241,36 @@ end
 
 ###### section4-5
 ### 条件分岐
-if式のthenは省略する。
-
-if!xのような場合は、unlessを使用する。
-
-条件が十分に簡単で、一行でかける場合は、修飾子として使ってもよい。
+- if式のthenは省略しましょう。
+- if!xのような場合は、unlessを使用しましょう。
+- 条件が十分に簡単で、一行でかける場合は、修飾子として使ってもいいっす。
+- 三項演算子も読みやすい範囲で使っていきましょう。
 
 **正解**
 ```ruby
-if x > 0
-  puts "x > 0"
+if self.perfume?
+  puts "yes i am."
 else
-  puts "x <= 0"
+  puts "no i'm not."
 end
 
-unless x > 0
-  puts "x <= 0"
+unless self.perfume?
+  puts "yes i am."
 else
-  puts "x > 0"
+  
+ i'm not."
 end
 
-puts "x is true" if x
+puts "yes i am." if self.perfume?
+
+puts self.perfume? ? "yes i am." : "no i'm not."
+
 ```
 
 **誤り**
 ```ruby
-if x > 0 then
-  puts "x > 0"
+if self.tashiro? then
+  puts "yes i m."
 end
 
 puts "hoge" if foo && bar && baz && quux
@@ -256,35 +278,34 @@ puts "hoge" if foo && bar && baz && quux
 
 **正解**
 ```ruby
-case x
-when 1
-  puts "x is 1"
-when 2
-  puts "x is 2"
+case bust
+when 80
+  puts "fum fum"
+when 96
+  puts "hou hou"
 end
 ```
 
 **誤り**
 ```ruby
-if x == 1
-  puts "x is 1"
-elseif == 2
-  puts "x is 2"
+if bust == 80
+  puts "fum fum"
+elsif == 96
+  puts "hou hou"
 end
 
-case x
-when 1 then
-  puts "x is 1"
-when 2 then
-  puts "x is 2"
+case bust
+when 80 then
+  puts "fum fum"
+when 96 then
+  puts "hou hou"
 end
 ```
 
 ###### section4-6
 ### 繰り返し
-while の do は省略する。
-
-while !x のような場合は、util x に置き換える。
+- while の do は省略しましょう。
+- while !x のような場合は、util x に置き換えましょう。 //TODO:ここ例題が正しいか検討が必要
 
 **正解**
 ```ruby
@@ -304,37 +325,34 @@ while cond do
 end
 ```
 
-また、無限ループには loop を使用する。
+- また、無限ループには loop を使用しましょう。
 
 **正解**
 ```ruby
 loop do
-  puts "looping"
+  puts "dance!dance!dance!"
 end
 ```
 
 **誤り**
 ```ruby
 while true
-  puts "looping"
+  puts "dance!dance!dance!"
 end
 ```
 
 ###### section4-7
 ### 例外
-例外発生の基本方針はそれが「異常事態」かどうかで判断する。
+- 例外発生の基本方針はそれが「異常事態」かどうかで判断するようにしましょう。
+- 明示的に例外を発生させないとプログラムが異常終了してしまう場合に使用しましょう。
+- 例えば、ActiveRecord での save!メソッドは使わず、save メソッドを使用しましょう（バリデーションに引っかかるのは例外ではなく、想定された動作なので）。
 
-明示的に例外を発生させないとプログラムが以上終了する場合などに用いる。
-
-例えば ActiveRecord での save!メソッドは使わず、save メソッドを使用する。
-
-バリデーションに引っかかるのは例外ではなく、想定された動作である。
-
-rescue を全て消しても、通常に動作する。
+### メソッドレベルでのensure
+- //TODO: issue
 
 ###### section4-8
 ### ファイル
-ファイルの入出力は特別な事情がない限りブロックを使うこと。
+- ファイルの入出力は特別な事情がない限り、ファイルクローズなどの処理の記述忘れをしないためにも、ブロックを使いましょう。
 
 **正解**
 ```ruby
@@ -349,43 +367,41 @@ begin
   f = open("sample.txt", "r")
   puts f.gets
 ensure
-  f.close
+  f.close #忘れる可能性あり！！
 end
 ```
 
 ###### section4-9
 ### RubyGems
-Rails アプリで使用する gems は RAILS_ROOT/config/environment.rb に指定すること。
+Rails アプリで使用する gems は RAILS_ROOT/config/environment.rb に指定すること。//TODO:検討が必要
 
 ```ruby
 config.gem 'rspec', ;lib => false
 ```
 
-また、gem は rake gems:unpack を使用し、RAILS_ROOT/vender/gems に格納すること。
+また、gem は rake gems:unpack を使用し、RAILS_ROOT/vender/gems に格納すること。//TODO:検討が必要
 
 ###### section4-10
 ### ERB::Util.html_escape
-Web アプリにおいて、出力文字列のエスケープは XSS に対する最も基本的な対処法である。
-
-Rails には ERB::Util.html_escape の alias である h ヘルパーが実装されている。
-
-特別な事情がない限り View への文字列の出力には h ヘルパーを必ず用いること。
+- Web アプリにおいて、出力文字列のエスケープは XSS に対する最も基本的な対処法です。
+- Rails には ERB::Util.html_escape の alias である h ヘルパーが実装されています。
+- 特別な事情がない限り View への文字列の出力には h ヘルパーを必ず使いましょう。
 
 ```ruby
-<%= h @output_str %>
+<%= h @comment %>
 ```
 
 ###### section4-11
 ### メタプログラミング
-メタプログラミングをおこなう上では、運用/保守に入った際に他人が読んでもわかりやすいことを心がける。
+- メタプログラミングをおこなう上では、運用/保守に入った際に他人が読んでもわかりやすいことを心がけるようにしましょう。
 
 #### method_missing
-superを使い、本来のメソッドミッシングを呼び出す様にする。
+superを使い、親のメソッドミッシングを呼び出すようにしましょう。
 **正解**
 ```ruby
 def method_missing(name)
-  if nameがメソッド追加条件に一致
-    メソッドとしての処理
+  if @attributes.key? name
+    #メソッドとしての処理
   else
     super
   end
@@ -395,82 +411,83 @@ end
 **誤り**
 ```ruby
 def method_missing(name)
-  if nameがメソッド追加条件に一致
-    メソッドとしての処理
+  if @attributes.key? name
+    # メソッドとしての処理
   end
+  # 例外が発生しないため、わからないよー＞＜
 end
 ```
-+ この場合本来のmethod_missingがかえらないため混乱を招く。
 
-また、method_missingで追加したメソッドについては、下記の様にどのレベルまでrespond_to?に対応するかは都度チームで決定し拡張しましょう。
+- また、method_missingで追加したメソッドについては、下記の様にどのレベルまでrespond_to?に対応するかは都度チームで決定し拡張しましょう。
 ```ruby
 def respond_to?(name)
-  @attr.key?(method) || super
+  @attributes.key?(method) || super
 end
 ```
+
+//TOOD:issue
+### eval
+### class_eval
+### instance_eval
+### 特異メソッド
+### クリーンルームの使用
+### フラットスコープの使用
+### コンテキスト探査機
 
 ###### section5
 ## データベース設計
 
 ###### section5-1
 ### データベース名
-development, product 環境ともに project_name で統一。
-
-test 環境、またその他の環境に関しては project_name_environment で統一。
+- development, product 環境ともに project_name で統一しましょう。
+- test環境、またその他の環境に関しては project_name_environment で統一しましょう。
 
 ###### section5-2
 ### 日付型カラム名
-****_at で統一。
-
-年日時のみであっても ****_on は使わない。
+- xxx_at で統一。　//TODO:issue
+- 年日時のみであっても xxx_on は使わない。
 
 ###### section5-3
 ### タイプコードカラム名
+//TODO:
 
 ###### section5-4
 ### booleanカラム名
+//TODO:
 
 ###### section6
 ## テスト
-プロダクトコードに書く前に、テストコードを書くこと(テストファースト)
+- プロダクトコードに書く前に、テストコードを書きましょう。
+- テストツールにはRSpecをつかいましょう。
+- テストは自動化しましょう。
 
-テストツールには RSpec を標準とする。
-
-テストは自動化し、バグの早期発見に努める。
-
-###### section7
+###### section7 //TODO:ここに必要か？＆内容を検討
 ## 原則
-プログラムの設計において先人たちの知恵を借りることは大事である。
-
-盲目的に原則を信じるのではなく、「なぜ」かを意識すること。
-
-また様々な原則・デザインパターンの学習に努めること。
+- プログラムの設計において先人たちの知恵を借りることは大事である。
+- 盲目的に原則を信じるのではなく、「なぜ」かを意識すること。
+- また様々な原則・デザインパターンの学習に努めること。
 
 ###### section7-1
 ### スコープは適切に
-スコープは限りなく狭くすること。
-
-本当に必要だと思ったときのみ、グローバルなスコープを用いること。
+- スコープは限りなく狭くすること。
+- 本当に必要だと思ったときのみ、グローバルなスコープを用いること。
 
 ###### section7-2
 ### DRY(Don't Your Self)
-同じ処理を二度と書かないこと。
+- 同じ処理を二度と書かないこと。
 
 ###### section7-3
 ### OCP(Open-Closed Principle)
-拡張に対して開いていなければならず、修正に対して閉じていなければならない。
-
-「拡張に対して閉じている」と言うのは、モジュールの拡張が可能ということでもあり、「修正に対して閉じている」と言うのは、モジュールの内部実装を修正してもそのインターフェースは安定しているということである。
+- 拡張に対して開いていなければならず、修正に対して閉じていなければならない。
+- 「拡張に対して閉じている」と言うのは、モジュールの拡張が可能ということでもあり、「修正に対して閉じている」と言うのは、モジュールの内部実装を修正してもそのインターフェースは安定しているということである。
 
 ###### section8
 ## 参考文献
-達人プログラマー[ISBN4-89471-274-1]
-
-プログラミング作法[ISBN4-7561-3649-4]
-
-Kenji Hiranabe, コーディング標準(オリジナル)
-http://objectclub.esm.co.jp/eXtremeProgramming/CodingStd.doc
-
-Ruby コーディング規約
-http://shugo.net/ruby-codeconv/codeconv.html
+- プログラミング言語Ruby[ISBN978-4-87311-394-4]
+- 達人プログラマー[ISBN4-89471-274-1]
+- プログラミング作法[ISBN4-7561-3649-4]
+- Kenji Hiranabe, コーディング標準(オリジナル)
+-- http://objectclub.esm.co.jp/eXtremeProgramming/CodingStd.doc
+- Ruby コーディング規約
+-- http://shugo.net/ruby-codeconv/codeconv.html
 
