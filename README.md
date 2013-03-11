@@ -444,8 +444,8 @@ end
 
 ###### section5-2
 ### 日付型カラム名
-- xxx_at で統一。　//TODO:issue
-- 年日時のみであっても xxx_on は使わない。
+- datetime型、timestamp型は xxx_at で統一。
+- 年月日のみ（date型）の場合はxxx_onを使用する。
 
 ###### section5-3
 ### タイプコードカラム名
