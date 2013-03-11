@@ -23,6 +23,7 @@ TODO: kawashima あとで書きなおす
   * [ファイルの入出力](#section4-8)
   * [gems](#section4-9)
   * [ERB::Util.html_escape](#section4-10)
+  * [メタプログラミング](#section4-11)
 * [データベース設計](#section5)
   * [データベース名](#section5-1)
   * [日付型カラム名](#section5-2)
@@ -372,6 +373,40 @@ Rails には ERB::Util.html_escape の alias である h ヘルパーが実装�
 
 ```ruby
 <%= h @output_str %>
+```
+
+###### section4-11
+### メタプログラミング
+メタプログラミングをおこなう上では、運用/保守に入った際に他人が読んでもわかりやすいことを心がける。
+
+#### method_missing
+superを使い、本来のメソッドミッシングを呼び出す様にする。
+**正解**
+```ruby
+def method_missing(name)
+  if nameがメソッド追加条件に一致
+    メソッドとしての処理
+  else
+    super
+  end
+end
+```
+
+**誤り**
+```ruby
+def method_missing(name)
+  if nameがメソッド追加条件に一致
+    メソッドとしての処理
+  end
+end
+```
++ この場合本来のmethod_missingがかえらないため混乱を招く。
+
+また、method_missingで追加したメソッドについては、下記の様にどのレベルまでrespond_to?に対応するかは都度チームで決定し拡張しましょう。
+```ruby
+def respond_to?(name)
+  @attr.key?(method) ? true : super
+end
 ```
 
 ###### section5
