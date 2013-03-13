@@ -444,8 +444,23 @@ end
 
 ###### section5-2
 ### 日付型カラム名
-- datetime型、timestamp型は xxx_at で統一。
-- 年月日のみ（date型）の場合はxxx_onを使用する。
+- DATE型はカラム名を```*_on```とする。
+- DATETIME型はカラム名を```*_at```とする。
+- 作成日、更新日は```created_at```、```updated_at```とする。
+- マイグレーションでt.timestampは利用しないこと。
+
+```ruby
+create_table :users do |t|
+
+t.timestamp :moged_at # <= これはナシ
+t.timestamp :ahoge_on # <= これはナシ
+
+t.datetime :published_at
+t.date :operated_on
+
+t.timestamps # created_at, updated_at
+end
+```
 
 ###### section5-3
 ### タイプコードカラム名
