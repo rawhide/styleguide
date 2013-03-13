@@ -21,7 +21,7 @@ TODO: kawashima あとで書きなおす
   * [繰り返し](#section4-6)
   * [例外](#section4-7)
   * [ファイルの入出力](#section4-8)
-  * [gems](#section4-9)
+  * [RubyGems](#section4-9)
   * [ERB::Util.html_escape](#section4-10)
   * [メタプログラミング](#section4-11)
 * [データベース設計](#section5)
@@ -373,16 +373,15 @@ end
 
 ###### section4-9
 ### RubyGems
-Rails アプリで使用する gems は RAILS_ROOT/config/environment.rb に指定すること。//TODO:検討が必要
+- Rails アプリで使用する gems は RAILS_ROOT/Gemfileに記述すること。
+- 特に指示がない限りバージョンは明記しておくこと。
 
 ```ruby
-config.gem 'rspec', ;lib => false
+gem 'rails', '3.2.12'
 ```
 
-また、gem は rake gems:unpack を使用し、RAILS_ROOT/vender/gems に格納すること。//TODO:検討が必要
-
 ###### section4-10
-### ERB::Util.html_escape
+### ERB::Util.html_escape //TODO:検討が必要
 - Web アプリにおいて、出力文字列のエスケープは XSS に対する最も基本的な対処法です。
 - Rails には ERB::Util.html_escape の alias である h ヘルパーが実装されています。
 - 特別な事情がない限り View への文字列の出力には h ヘルパーを必ず使いましょう。
