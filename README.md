@@ -161,8 +161,20 @@ local_variable
 $global_variable
 ```
 
+###### section3-5
 ### シンボル
-//TODO:issue
+- アローは使用せずに書きましょう。
+
+**正解**
+```ruby
+foo:1, bar:2
+```
+
+**誤り**
+```ruby
+:foo => 1, :bar => :2
+```
+
 
 ###### section4
 ### ガイドライン
@@ -204,9 +216,6 @@ obj.hoge(1, 2) &&  obj.hoge(3, 4)
 
 # 2) の誤り
 obj.hoge 1, 2 && obj.hoge obj.hoge(3, 4), 5 #=>単純に読みづらいので、()をつけよう
-
-# 2) の誤り
-
 ```
 
 ### 可変パラメータ //TODO:issue
