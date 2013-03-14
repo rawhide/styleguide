@@ -12,6 +12,7 @@ TODO: kawashima あとで書きなおす
   * [メソッド名](#section3-2)
   * [定数名](#section3-3)
   * [変数名](#section3-4)
+  * [シンボル](#section3-5)
 * [ガイドライン](#section4)
   * [インデント](#section4-1)
   * [コメント](#section4-2)
@@ -161,8 +162,20 @@ local_variable
 $global_variable
 ```
 
+###### section3-5
 ### シンボル
-//TODO:issue
+- アローは使用せずに書きましょう。
+
+**正解**
+```ruby
+foo:1, bar:2
+```
+
+**誤り**
+```ruby
+:foo => 1, :bar => :2
+```
+
 
 ###### section4
 ### ガイドライン
@@ -187,25 +200,23 @@ __end
 
 ###### section4-3
 ### メソッド定義
-- メソッドの定義の仮引数リストには括弧を付けるようにしましょう。//TODO:yokohama issueで検討
-- 引数がない場合は、括弧を省略する。
+- 1) メソッド定義の場合は、引数がある場合は、()をつける
+- 2) メソッドの呼び出しの場合は、読みやすさを重視する。
 
-**正解**
 ```ruby
-def foo(x, y)
-  ・・・
-end
-```
 
-**誤り**
-```ruby
-def foo x, y
-  ・・・
-end
+# 1) の正解
+def foo(x, y); end;
 
-def foo()
-  ・・・
-end
+# 1) の誤り
+def foo x, y; end;
+
+# 2) の正解
+obj.hoge 1, 2
+obj.hoge(1, 2) &&  obj.hoge(3, 4)
+
+# 2) の誤り
+obj.hoge 1, 2 && obj.hoge obj.hoge(3, 4), 5 #=>単純に読みづらいので、()をつけよう
 ```
 
 ### 可変パラメータ //TODO:issue
