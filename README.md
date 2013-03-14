@@ -12,6 +12,7 @@ TODO: kawashima あとで書きなおす
   * [メソッド名](#section3-2)
   * [定数名](#section3-3)
   * [変数名](#section3-4)
+  * [シンボル](#section3-5)
 * [ガイドライン](#section4)
   * [インデント](#section4-1)
   * [コメント](#section4-2)
