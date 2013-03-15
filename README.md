@@ -5,7 +5,6 @@
 ## Table of Contents
 * [基本方針](#section1)
 * [ファイル](#section2)
-  * [レイアウトファイル](#section2-1)
   * [部分テンプレート](#section2-2)
 * [命名規約](#section3)
   * [クラス・モジュール名](#section3-1)
@@ -53,11 +52,6 @@
 ###### section2
 ## ファイル
 - 以下は Rails プロジェクトにおいてのルールである。基本的には Rails のルールにしたがうようにしましょう。
-
-###### section2-1
-### レイアウトファイル
-- RAILS_ROOT/app/views/layouts はレイアウトファイルのみを入れましょう。//TODO:あたりまえすぎないか？
-- 全体を通して使用するレイアウトファイルは application.html.erb という名前で作成しましょう。//TODO:あたりまえすぎないか？
 
 ###### section2-2
 ### 部分テンプレート
