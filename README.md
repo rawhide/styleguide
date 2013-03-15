@@ -1,6 +1,6 @@
 # RAWHIDE. Style Guide
 
-TODO: kawashima あとで書きなおす
+*漢なら、黙って一枚、README*
 
 ## Table of Contents
 * [基本方針](#section1)
