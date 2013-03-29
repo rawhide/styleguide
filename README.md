@@ -1,12 +1,15 @@
-# RAWHIDE. Style Guide
-
-*漢なら、黙って一枚、README*
-
 ## Table of Contents
 * [基本方針](#section-0)
   * [概要](#section-0-0)
   * [目的](#section-0-1)
   * [使い方](#section-0-2)
+  * [見て読みやすく](#section-0-3)
+  * [読んで解りやすく](#section-0-4)
+  * [スコープは適切に](#section-0-5)
+  * [DRY(Don't Your Self)](#section-0-6)
+  * [OCP(Open-Closed Principle)](#section-0-7)
+  * [一般的に多く使われているrubyistにまねる](#section-0-8)
+  * [変化を受け入れろ！](#section-0-9)
 * [ファイル](#section-1)
   * [概要](#section-1-0)
   * [ファイルレイアウト](#section-1-1)
@@ -34,11 +37,13 @@
   * [メソッドレベルでのensure](#section-4-10)
   * [ファイル](#section-4-11)
   * [RubyGems](#section-4-12)
-  * [return](#section-4-13)
-  * [self](#section-4-14)
-  * [Symbol.to_procの活用（Ruby1.9）](#section-4-15)
-  * [lambdaとprocの活用 (使い分け)](#section-4-16)
-  * [例外のrescueの使い方](#section-4-17)
+  * [メタプログラミング-概要](#section-4-13)
+  * [メタプログラミング-method_missing](#section-4-14)
+  * [return](#section-4-15)
+  * [self](#section-4-16)
+  * [Symbol.to_procの活用（Ruby1.9）](#section-4-17)
+  * [lambdaとprocの活用 (使い分け)](#section-4-18)
+  * [例外のrescueの使い方](#section-4-19)
 * [データベース設計](#section-5)
   * [データベース名](#section-5-0)
   * [日付型カラム名](#section-5-1)
@@ -65,6 +70,52 @@
 ### 使い方
 - 異臭をはなつ部分は、issueで議論しましょう。決まったものからこちらに移していきましょう。
 - 場合によってはこの規約から外れることも時には重要であり、その際はなにかしらの説明を用意するようにしましょう。
+
+##### section-0-3
+### 見て読みやすく
+- 見て読みやすく
+
+
+
+##### section-0-4
+### 読んで解りやすく
+- 読んで解りやすく
+
+
+
+##### section-0-5
+### スコープは適切に
+- スコープは限りなく狭くすること。
+- 本当に必要だと思ったときのみ、グローバルなスコープを用いること。
+
+
+
+##### section-0-6
+### DRY(Don't Your Self)
+- 同じ処理を二度と書かないこと。
+
+
+
+##### section-0-7
+### OCP(Open-Closed Principle)
+- 拡張に対して開いていなければならず、修正に対して閉じていなければならない。
+- 「拡張に対して閉じている」と言うのは、モジュールの拡張が可能ということでもあり、「修正に対して閉じている」と言うのは、モジュールの内部実装を修正してもそのインターフェースは安定しているということである。
+
+
+
+##### section-0-8
+### 一般的に多く使われているrubyistにまねる
+- プログラムの設計において先人たちの知恵を借りることは大事である。
+- 盲目的に原則を信じるのではなく、「なぜ」かを意識すること。
+- また様々な原則・デザインパターンの学習に努めること。
+
+
+
+##### section-0-9
+### 変化を受け入れろ！
+- 変化を受け入れろ！
+
+
 
 
 ##### section-1
@@ -442,6 +493,35 @@ end
 - gem 'rails', '3.2.12'
 
 ##### section-4-13
+### メタプログラミング-概要
+- メタプログラミングをおこなう上では、運用/保守に入った際に他人が読んでもわかりやすいことを心がけるようにしましょう。
+
+##### section-4-14
+### メタプログラミング-method_missing
+- superを使い、親のメソッドミッシングを呼び出すようにしましょう。 
+
+```ruby
+#正解
+def method_missing(name)
+  if @attributes.key? name
+    #メソッドとしての処理
+  else
+    super
+  end
+end
+
+#誤り
+def method_missing(name)
+  if @attributes.key? name
+    # メソッドとしての処理
+  end
+  # 例外が発生しないため、わからないよー＞＜
+end
+```
+
+また、method_missingで追加したメソッドについては、下記の様にどのレベルまでrespond_to?に対応するかは都度チームで決定し拡張しましょう。 ruby def respond_to?(name) @attributes.key?(method) || super end
+
+##### section-4-15
 ### return
 
 - 必要のあるreturnは書く。（redirect_toとか）
@@ -492,7 +572,7 @@ redirect_to の後の return は基本的に書かなくても大丈夫だが、
 
 
 
-##### section-4-14
+##### section-4-16
 ### self
 
 - インスタンス変数には@をつける。
@@ -532,7 +612,7 @@ end
 
 
 
-##### section-4-15
+##### section-4-17
 ### Symbol.to_procの活用（Ruby1.9）
 
 - to_proc相当の機能は、Ruby 1.9 ではSymbolクラスへと統合されました。
@@ -559,7 +639,7 @@ sum = points.inject(0, &:+)
 
 
 
-##### section-4-16
+##### section-4-18
 ### lambdaとprocの活用 (使い分け)
 
 - procよりもlambdaを積極的に使う
@@ -609,7 +689,7 @@ f.(x,y)
 
 
 
-##### section-4-17
+##### section-4-19
 ### 例外のrescueの使い方
 
 - rescueを使う時は、何をキャッチしているのかを明確にするため、例外オブジェクトを明記する。
