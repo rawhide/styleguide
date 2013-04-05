@@ -1,12 +1,9 @@
-# RAWHIDE. Style Guide
-
-*漢なら、黙って一枚、README*
-
 ## Table of Contents
 * [基本方針](#section-0)
   * [概要](#section-0-0)
   * [目的](#section-0-1)
   * [使い方](#section-0-2)
+  * [原則](#section-0-3)
 * [ファイル](#section-1)
   * [概要](#section-1-0)
   * [ファイルレイアウト](#section-1-1)
@@ -24,18 +21,23 @@
   * [インデント](#section-4-0)
   * [コメント](#section-4-1)
   * [代入](#section-4-2)
-  * [メソッド定義](#section-4-3)
-  * [可変パラメータ](#section-4-4)
-  * [ブロック](#section-4-5)
-  * [条件分岐](#section-4-6)
-  * [繰り返し](#section-4-7)
-  * [例外](#section-4-8)
-  * [メソッドレベルでのensure](#section-4-9)
-  * [ファイル](#section-4-10)
-  * [RubyGems](#section-4-11)
-  * [ERB:Util.html_escape](#section-4-12)
-  * [Symbol.to_procの活用（Ruby1.9）](#section-4-13)
-  * [例外のrescueの使い方](#section-4-14)
+  * [文字列](#section-4-3)
+  * [メソッド定義](#section-4-4)
+  * [可変パラメータ](#section-4-5)
+  * [ブロック](#section-4-6)
+  * [条件分岐](#section-4-7)
+  * [繰り返し](#section-4-8)
+  * [例外](#section-4-9)
+  * [メソッドレベルでのensure](#section-4-10)
+  * [ファイル](#section-4-11)
+  * [RubyGems](#section-4-12)
+  * [メタプログラミング-概要](#section-4-13)
+  * [メタプログラミング-method_missing](#section-4-14)
+  * [return](#section-4-15)
+  * [self](#section-4-16)
+  * [Symbol.to_procの活用（Ruby1.9）](#section-4-17)
+  * [lambdaとprocの活用 (使い分け)](#section-4-18)
+  * [例外のrescueの使い方](#section-4-19)
 * [データベース設計](#section-5)
   * [データベース名](#section-5-0)
   * [日付型カラム名](#section-5-1)
@@ -43,13 +45,8 @@
   * [booleanカラム名](#section-5-3)
 * [テスト](#section-6)
   * [概要](#section-6-0)
-* [原則](#section-7)
-  * [概要](#section-7-0)
-  * [スコープは適切に](#section-7-1)
-  * [DRY(Don't Your Self)](#section-7-2)
-  * [OCP(Open-Closed Principle)](#section-7-3)
-* [参考文献](#section-8)
-  * [一覧](#section-8-0)
+* [参考文献](#section-7)
+  * [一覧](#section-7-0)
 
 ##### section-0
 ## 基本方針
@@ -67,6 +64,16 @@
 ### 使い方
 - 異臭をはなつ部分は、issueで議論しましょう。決まったものからこちらに移していきましょう。
 - 場合によってはこの規約から外れることも時には重要であり、その際はなにかしらの説明を用意するようにしましょう。
+
+##### section-0-3
+### 原則
+- 見て読みやすく
+- 読んで解りやすく
+- スコープは適切に
+- DRY(Don't Your Self)
+- OCP(Open-Closed Principle)
+- 一般的に多く使われているrubyistにまねる
+- 変化を受け入れろ！
 
 
 ##### section-1
@@ -243,6 +250,24 @@ a = 1 if a.nil? #×冗長なので×
 
 
 ##### section-4-3
+### 文字列
+
+-
+
+```ruby
+#いい例
+"#{i}さん、#{b}さん、#{a}さん"
+
+#いい例)ダブルクオート
+%(#{i}さん、#{t}さん、#{o}さん、"ITO")
+
+#悪い例
+i + "さん、" + b + ”さん、" + a + "さん"
+```
+
+
+
+##### section-4-4
 ### メソッド定義
 - メソッドの定義の仮引数リストには括弧を付けるようにしましょう。
 - 引数がない場合は、括弧をつけないようにしましょう。
@@ -263,11 +288,11 @@ def foo()
 end
 ```
 
-##### section-4-4
+##### section-4-5
 ### 可変パラメータ
 
 
-##### section-4-5
+##### section-4-6
 ### ブロック
 - ブロックは基本的にdo・・・endを使用しましょう。ただし１行の時は{}を使いましょう。
 - またメソッドチェーンの場合も{}を使用しましょう。
@@ -294,7 +319,7 @@ end.each do |i|
 end
 ```
 
-##### section-4-6
+##### section-4-7
 ### 条件分岐
 - if式のthenは省略しましょう。
 - if !xのような場合は、unlessを使用しましょう。
@@ -355,7 +380,7 @@ when 120 then
 end
 ```
 
-##### section-4-7
+##### section-4-8
 ### 繰り返し
 while の do は省略しましょう。
 while !x のような場合は、util x に置き換えましょう。 
@@ -390,17 +415,17 @@ while true
 end
 ```
 
-##### section-4-8
+##### section-4-9
 ### 例外
 - 例外発生の基本方針はそれが「異常事態」かどうかで判断するようにしましょう。
 - 明示的に例外を発生させないとプログラムが異常終了してしまう場合に使用しましょう。
 - 例えば、ActiveRecord での save!メソッドは使わず、save メソッドを使用しましょう（バリデーションに引っかかるのは例外ではなく、想定された動作なので）。
 
-##### section-4-9
+##### section-4-10
 ### メソッドレベルでのensure
 
 
-##### section-4-10
+##### section-4-11
 ### ファイル
 - ファイルの入出力は特別な事情がない限り、ファイルクローズなどの処理の記述忘れをしないためにも、ブロックを使いましょう。
 
@@ -419,20 +444,133 @@ ensure
 end
 ```
 
-##### section-4-11
+##### section-4-12
 ### RubyGems
 - Rails アプリで使用する gems は RAILS_ROOT/Gemfileに記述すること。
 - 特に指示がない限りバージョンは明記しておくこと。
 - gem 'rails', '3.2.12'
 
-##### section-4-12
-### ERB:Util.html_escape
-- Web アプリにおいて、出力文字列のエスケープは XSS に対する最も基本的な対処法です。
-- Rails には ERB::Util.html_escape の alias である h ヘルパーが実装されています。
-- 特別な事情がない限り View への文字列の出力には h ヘルパーを必ず使いましょう。
-<%= h @comment %>
-
 ##### section-4-13
+### メタプログラミング-概要
+- メタプログラミングをおこなう上では、運用/保守に入った際に他人が読んでもわかりやすいことを心がけるようにしましょう。
+
+##### section-4-14
+### メタプログラミング-method_missing
+- superを使い、親のメソッドミッシングを呼び出すようにしましょう。 
+
+```ruby
+#正解
+def method_missing(name)
+  if @attributes.key? name
+    #メソッドとしての処理
+  else
+    super
+  end
+end
+
+#誤り
+def method_missing(name)
+  if @attributes.key? name
+    # メソッドとしての処理
+  end
+  # 例外が発生しないため、わからないよー＞＜
+end
+```
+
+また、method_missingで追加したメソッドについては、下記の様にどのレベルまでrespond_to?に対応するかは都度チームで決定し拡張しましょう。 ruby def respond_to?(name) @attributes.key?(method) || super end
+
+##### section-4-15
+### return
+
+- 必要のあるreturnは書く。（redirect_toとか）
+- 必要のないreturnは省略しても良い。
+
+```ruby
+#普通のruby
+
+#推奨)
+class Gay
+  def say
+     "I was gay"
+  end
+end
+
+#非推奨)
+class Gay
+  def say
+     return "I was gay"
+  end
+end
+
+#Railsのcontrollerの場合...
+
+#推奨)
+class HogesController < ApplicationController
+  def index
+     redirect_to piyos_path and return
+  end
+end
+
+class HogesController < ApplicationController
+  def index
+     redirect_to piyos_path
+     return
+  end
+end
+
+#非推奨)
+class HogesController < ApplicationController
+  def index
+     redirect_to piyos_path
+  end
+end
+```
+
+redirect_to の後の return は基本的に書かなくても大丈夫だが、2重に return される時があるので、書いたほうが良い。
+
+
+
+##### section-4-16
+### self
+
+- インスタンス変数には@をつける。
+- インスタンスメソッドにはself.をつける。
+
+```ruby
+# 例)
+class Hoge
+  attr_accessor :title
+
+  def hoge
+    #ローカル変数
+    title = 'hoge'
+    puts title #=> hoge
+
+    #インスタンス変数(attr_accessor)
+    self.title = 'moge'
+    puts self.title #=> moge
+    puts title #=> hoge
+
+    #インスタンス変数(attr_accessor)
+    @title = 'foo'
+    puts @title #=> foo
+    puts self.title #=> foo
+
+    #メソッドの場合
+    pp = 'pp'
+    pp  #変数ppが評価される
+    self.pp #=> oo メソッドppが評価される
+  end
+
+  def pp
+    puts 'oo'
+  end
+end
+```
+
+
+
+##### section-4-17
 ### Symbol.to_procの活用（Ruby1.9）
 
 - to_proc相当の機能は、Ruby 1.9 ではSymbolクラスへと統合されました。
@@ -459,7 +597,57 @@ sum = points.inject(0, &:+)
 
 
 
-##### section-4-14
+##### section-4-18
+### lambdaとprocの活用 (使い分け)
+
+- procよりもlambdaを積極的に使う
+- lambdaリテラルを使う
+- 下記の点で、できればlambdaを使う様にしましょう！
+
+１）引数に厳格（ArgmentErrorを投げる）
+２）returnがメソッドと同じ感覚で使える（LocalJumpErrorを投げない）
+
+```ruby
+#引数の扱いの違い
+a = lambda do |x,y|
+end
+
+b = proc do |x,y|
+end
+
+a.call #アウト（メソッド定義に近い）
+b.call #セーフ（よろしくやってくれる）
+
+#returnの違い
+def hoge
+p = proc { return }
+p.call
+p 'hoge' #LocalJumpError procのリターンはhogeメソッドから出てしまうため、この行は実行されない。
+end
+
+def hoge
+p = lambda { return }
+p.call
+p. 'hoge' #lambdaのリターンはブロックからのリターンのため、この行は実行される。
+end
+
+#1.9以降のラムダリテラル
+a = ->(x,y) do
+end
+
+#x,y=引数 i,n=ローカル変数定義
+a = ->(x,y; i=0) do
+end
+
+#1.9以降procの呼び出し方法
+f.call(x,y) #今まで通り
+f[x,y]
+f.(x,y)
+```
+
+
+
+##### section-4-19
 ### 例外のrescueの使い方
 
 - rescueを使う時は、何をキャッチしているのかを明確にするため、例外オブジェクトを明記する。
@@ -535,31 +723,8 @@ end
 
 
 ##### section-7
-## 原則
-##### section-7-0
-### 概要
-- プログラムの設計において先人たちの知恵を借りることは大事である。
-- 盲目的に原則を信じるのではなく、「なぜ」かを意識すること。
-- また様々な原則・デザインパターンの学習に努めること。
-
-##### section-7-1
-### スコープは適切に
-- スコープは限りなく狭くすること。
-- 本当に必要だと思ったときのみ、グローバルなスコープを用いること。
-
-##### section-7-2
-### DRY(Don't Your Self)
-- 同じ処理を二度と書かないこと。
-
-##### section-7-3
-### OCP(Open-Closed Principle)
-- 拡張に対して開いていなければならず、修正に対して閉じていなければならない。
-- 「拡張に対して閉じている」と言うのは、モジュールの拡張が可能ということでもあり、「修正に対して閉じている」と言うのは、モジュールの内部実装を修正してもそのインターフェースは安定しているということである。
-
-
-##### section-8
 ## 参考文献
-##### section-8-0
+##### section-7-0
 ### 一覧
 - プログラミング言語Ruby[ISBN978-4-87311-394-4]
 - 達人プログラマー[ISBN4-89471-274-1]
