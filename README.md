@@ -14,6 +14,7 @@
 * [命名規則](#section-3)
   * [メソッド名](#section-3-0)
       * [自己破壊メソッド](#section-3-0-0)
+      * [クラスメソッド](#section-3-0-1)
   * [定数名](#section-3-1)
   * [変数名](#section-3-2)
   * [シンボル](#section-3-3)
@@ -38,15 +39,17 @@
   * [Symbol.to_procの活用（Ruby1.9）](#section-4-17)
   * [lambdaとprocの活用 (使い分け)](#section-4-18)
   * [例外のrescueの使い方](#section-4-19)
-* [データベース設計](#section-5)
-  * [データベース名](#section-5-0)
-  * [日付型カラム名](#section-5-1)
-  * [タイプコードカラム名](#section-5-2)
-  * [booleanカラム名](#section-5-3)
-* [テスト](#section-6)
-  * [概要](#section-6-0)
-* [参考文献](#section-7)
-  * [一覧](#section-7-0)
+* [推奨イデオム](#section-5)
+  * [options={}パラメータのデフォルト値セット方法](#section-5-0)
+* [データベース設計](#section-6)
+  * [データベース名](#section-6-0)
+  * [日付型カラム名](#section-6-1)
+  * [タイプコードカラム名](#section-6-2)
+  * [booleanカラム名](#section-6-3)
+* [テスト](#section-7)
+  * [概要](#section-7-0)
+* [参考文献](#section-8)
+  * [一覧](#section-8-0)
 
 ##### section-0
 ## 基本方針
@@ -181,6 +184,32 @@ end
 ```
 メソッド名には、使うときに注意が必要だということを示すために、末尾に感嘆符をつけることができる。
 この命名習慣は、オブジェクト自身を破壊的に書き換えるミューテータメソッドと下のオブジェクトのコピーに変更を加えたものを返すメソッドとを区別するために使われることが多い
+
+
+
+##### section-3-0-1
+#### クラスメソッド
+
+- 動的にクラスメソッドを追加する等ではなく、あらかじめメソッド名がわかっている（ようは通常のクラスメソッド定義）の場合は、素直に、self.hogeを使いましょう
+
+```ruby
+# 推奨
+class Hoge
+  def self.hoge
+  end
+end
+
+
+#クラスメソッドが大量に発生した場合のみ推奨
+class Hoge
+  class << self
+    def hoge
+    end
+  end
+end
+```
+
+大量のクラスメソッドがある場合は、毎回selfはだるいので、こちらを使いましょう。また使う場合は、大量のクラスメソッドを一カ所にまとめるという効果もあります。
 
 
 
@@ -679,13 +708,31 @@ end
 
 
 ##### section-5
-## データベース設計
+## 推奨イデオム
 ##### section-5-0
+### options={}パラメータのデフォルト値セット方法
+
+- options={}パラメータのデフォルト値セット方法は以下を推奨します。
+
+```ruby
+@default_config = {x:1, y:2}
+
+def hoge(options={})
+  my_config = @default_config.merge options
+end
+```
+
+
+
+
+##### section-6
+## データベース設計
+##### section-6-0
 ### データベース名
 - development, product 環境ともに project_name で統一しましょう。
 - test環境、またその他の環境に関しては project_name_environment で統一しましょう。
 
-##### section-5-1
+##### section-6-1
 ### 日付型カラム名
 - DATE型はカラム名を*_onとする。
 - DATETIME型はカラム名を*_atとする。
@@ -704,27 +751,27 @@ create_table :users do |t|
 end
 ```
 
-##### section-5-2
+##### section-6-2
 ### タイプコードカラム名
 
 
-##### section-5-3
+##### section-6-3
 ### booleanカラム名
 
 
 
-##### section-6
+##### section-7
 ## テスト
-##### section-6-0
+##### section-7-0
 ### 概要
 - プロダクトコードに書く前に、テストコードを書きましょう。
 - テストツールにはRSpecをつかいましょう。
 - テストは自動化しましょう。
 
 
-##### section-7
+##### section-8
 ## 参考文献
-##### section-7-0
+##### section-8-0
 ### 一覧
 - プログラミング言語Ruby[ISBN978-4-87311-394-4]
 - 達人プログラマー[ISBN4-89471-274-1]
