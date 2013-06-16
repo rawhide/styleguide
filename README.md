@@ -24,6 +24,7 @@
   * [代入](#section-4-2)
   * [文字列](#section-4-3)
   * [メソッド定義](#section-4-4)
+      * [引数](#section-4-4-0)
   * [可変パラメータ](#section-4-5)
   * [ブロック](#section-4-6)
   * [条件分岐](#section-4-7)
@@ -316,6 +317,30 @@ def foo()
   ・・・
 end
 ```
+##### section-4-4-0
+#### 引数
+
+- ruby2.0ではキーワード引数を使いましょう。
+- html_optionsを渡したい場合等、全てがキーワード引数でカバーできるわけではないので、場合によっては使い分けをすること。
+
+```ruby
+#2.0
+def hoge( msg, limit: 10, offset: 10) 
+  p msg
+  p limit
+  p offset
+end
+
+#1.9.3
+def foo( msg, options=nil)
+  config = { limit: 10, offset: 10}.merge options
+  p msg
+  p config[:limit]
+  p config[:offset]
+end
+```
+
+
 
 ##### section-4-5
 ### 可変パラメータ
@@ -564,6 +589,7 @@ redirect_to の後の return は基本的に書かなくても大丈夫だが、
 
 - インスタンス変数には@をつける。
 - インスタンスメソッドにはself.をつける。
+- local変数とInstance methodと同じ名前はつけない
 
 ```ruby
 # 例)
@@ -768,7 +794,6 @@ end
 - テストツールにはRSpecをつかいましょう。
 - テストは自動化しましょう。
 
-
 ##### section-8
 ## 参考文献
 ##### section-8-0
@@ -778,6 +803,6 @@ end
 - プログラミング作法[ISBN4-7561-3649-4]
 - Kenji Hiranabe, コーディング標準(オリジナル) -- http://objectclub.esm.co.jp/eXtremeProgramming/CodingStd.doc
 - Ruby コーディング規約 -- http://shugo.net/ruby-codeconv/codeconv.html
-
-
+- [単体テストについて](https://github.com/rawhide/styleguide/blob/master/%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88.md)
+- [RSpecについて](https://github.com/rawhide/styleguide/blob/master/rspec.md)
 
