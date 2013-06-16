@@ -801,7 +801,6 @@ end
 - プログラミング言語Ruby[ISBN978-4-87311-394-4]
 - 達人プログラマー[ISBN4-89471-274-1]
 - プログラミング作法[ISBN4-7561-3649-4]
-- [Kenji Hiranabe, コーディング標準(オリジナル)](http://objectclub.esm.co.jp/eXtremeProgramming/CodingStd.doc)
 - [Ruby コーディング規約](http://shugo.net/ruby-codeconv/codeconv.html)
 - [単体テストについて](https://github.com/rawhide/styleguide/blob/master/%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88.md)
 - [RSpecについて](https://github.com/rawhide/styleguide/blob/master/rspec.md)
