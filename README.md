@@ -17,7 +17,8 @@
       * [クラスメソッド](#section-3-0-1)
   * [定数名](#section-3-1)
   * [変数名](#section-3-2)
-  * [シンボル](#section-3-3)
+  * [orm_forのローカル変数名](#section-3-3)
+  * [シンボル](#section-3-4)
 * [ガイドライン](#section-4)
   * [インデント](#section-4-0)
   * [コメント](#section-4-1)
@@ -42,6 +43,9 @@
   * [例外のrescueの使い方](#section-4-19)
 * [推奨イデオム](#section-5)
   * [options={}パラメータのデフォルト値セット方法](#section-5-0)
+  * [FIleのパスを作る記述方法](#section-5-1)
+  * [OSネイティブ](#section-5-2)
+  * [インスタンス変数の名前](#section-5-3)
 * [データベース設計](#section-6)
   * [データベース名](#section-6-0)
   * [日付型カラム名](#section-6-1)
@@ -240,6 +244,20 @@ $global_variable
 ```
 
 ##### section-3-3
+### orm_forのローカル変数名
+
+- 公式だと _fieldsでAPIリファレンスがかかれている為、profile_fieldsにする。
+- form_forの小要素の場合は_fileds, _formなどにする
+```ruby
+# 悪い例
+：f2, f3, p_fp_f
+
+# いい例
+profile_fields
+```
+
+
+##### section-3-4
 ### シンボル
 
 
@@ -750,6 +768,55 @@ end
 
 
 
+##### section-5-1
+### FIleのパスを作る記述方法
+
+- Fileのパスを作る場合は以下を推奨します。
+
+```ruby
+#悪い例
+path = "#{Rails.root}/tmp/hoge"
+
+#良い例
+path = File.join Rails.root, "tmp", "hoge"
+```
+
+
+##### section-5-2
+### OSネイティブ
+
+- OSネイティブはなるべく呼ばないようにすることを推奨
+
+```ruby
+DIR_PATH="/tmp/hoge"
+  #これはだめ
+  def init_dir
+    `mkdir -p #{DIR_PATH}`
+  end
+
+
+  #推奨
+  require 'fileutils'
+  def init_dir
+      FileUtils.mkdir_p DIR_PATH unless Dir.exist?(DIR_PATH) #無い場合のみ実行
+  end
+```
+
+
+##### section-5-3
+### インスタンス変数の名前
+
+- 代入側は呼び出したクラスのdowncaseにすることを推奨
+
+```ruby
+#悪い例
+obj = User.newu = User.new
+
+#いい例
+user = User.new
+```
+
+
 
 ##### section-6
 ## データベース設計
@@ -794,6 +861,7 @@ end
 - テストツールにはRSpecをつかいましょう。
 - テストは自動化しましょう。
 
+
 ##### section-8
 ## 参考文献
 ##### section-8-0
@@ -801,7 +869,8 @@ end
 - プログラミング言語Ruby[ISBN978-4-87311-394-4]
 - 達人プログラマー[ISBN4-89471-274-1]
 - プログラミング作法[ISBN4-7561-3649-4]
-- [Ruby コーディング規約](http://shugo.net/ruby-codeconv/codeconv.html)
-- [単体テストについて](https://github.com/rawhide/styleguide/blob/master/%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88.md)
-- [RSpecについて](https://github.com/rawhide/styleguide/blob/master/rspec.md)
+- Kenji Hiranabe, コーディング標準(オリジナル) -- http://objectclub.esm.co.jp/eXtremeProgramming/CodingStd.doc
+- Ruby コーディング規約 -- http://shugo.net/ruby-codeconv/codeconv.html
+
+
 
