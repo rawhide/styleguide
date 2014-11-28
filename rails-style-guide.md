@@ -368,6 +368,7 @@ gemを探すときは [https://www.ruby-toolbox.com/](https://www.ruby-toolbox.c
 * テンプレートエンジン
   - [haml-rails](https://github.com/indirect/haml-rails) - HTML/XHTMLを生成するためのマークアップ言語です。
   - [slim-rails](https://github.com/slim-template/slim-rails)  - Hamlとほとんど同じです。
+  - [sass-rails](https://github.com/rails/sass-rails) - CSSを楽にかける拡張言語です。
 * 狀態遷移
   - [state_machine](https://github.com/pluginaweek/state_machine)
 * 論理削除
